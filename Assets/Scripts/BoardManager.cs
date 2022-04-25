@@ -11,8 +11,11 @@ public class BoardManager : MonoBehaviour
     private Cell CellPrefab;
     [SerializeField]
     private Player PlayerPrefab;
+    [SerializeField]
+    private Enemy EnemyPrefab;
     private Grid grid;
     private Player player;
+    private Enemy enemy;
     public int Mcells;
     public int Ncells;
     private int x;
@@ -22,7 +25,7 @@ public class BoardManager : MonoBehaviour
     private Vector2 finishPoint;
     private Vector2[] enemiesPoint;
     private bool i;
-    private int levels = 4;
+    private int level = 1;
 
     private void Awake()
     {
@@ -51,11 +54,33 @@ public class BoardManager : MonoBehaviour
             }
         }
         player = Instantiate(PlayerPrefab, startPoint, Quaternion.identity);
-        player.setGrid(grid);    
+        player.setGrid(grid);
+
+        i = false;
+        while (i == false)
+        {
+            y = Random.Range(0, Ncells);
+            x = Random.Range(0, Ncells);
+            Debug.Log("Enemy: X"+x+"y"+y);
+            Point = grid.GetGridObject(x, y);
+            if(Point.isWalkable == true)
+            {
+                i = true;
+                startPoint = new Vector2(x, y);
+                enemy = Instantiate(EnemyPrefab, startPoint, Quaternion.identity);
+                // List<Cell> path = PathManager.Instance.FindPath(grid, (int)player.GetPosition.x, (int)player.GetPosition.y, startPoint.x, startPoint.y);
+                // enemy.SetPath(path);
+            }
+        }
     }
 
     // private void NextLevel()
     // {
+            // if(level<=4){
+
+            // }else{
+            //     //loadScene final
+            // }        
     //     grid = new Grid(Ncells, Ncells, 1, Mcells, CellPrefab);
 
     //     //set random start point only if the point is isWalkable
@@ -71,5 +96,26 @@ public class BoardManager : MonoBehaviour
     //         }
     //     }
     //     player = Instantiate(PlayerPrefab, startPoint, Quaternion.identity);
+//     player.setGrid(grid);
+
+//         i = false;
+//         for (int j = 0; j < level; j++)
+//             {
+// while (i == false)
+//         {
+//             y = Random.Range(0, Ncells);
+//             x = Random.Range(0, Ncells);
+//             Debug.Log("Enemy: X"+x+"y"+y);
+//             Point = grid.GetGridObject(x, y);
+//             if(Point.isWalkable == true)
+//             {
+//                 i = true;
+//                 startPoint = new Vector2(x, y);
+//                 enemy = Instantiate(EnemyPrefab, startPoint, Quaternion.identity);
+//                 // List<Cell> path = PathManager.Instance.FindPath(grid, (int)player.GetPosition.x, (int)player.GetPosition.y, startPoint.x, startPoint.y);
+//                 // enemy.SetPath(path);
+//             }
+//             }
+        
     // }
 }

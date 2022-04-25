@@ -13,7 +13,7 @@ public class Cell : MonoBehaviour
     public bool isEndPoint = false;
     public int x, y ;
     public int gCost, hCost, fCost;
-    
+    public Cell pastCell;
 
     public void Init(Grid grid, int x, int y, bool isWalkable)
     {
