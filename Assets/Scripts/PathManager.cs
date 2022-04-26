@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
+
 // ref: https://www.youtube.com/watch?v=alU04hvz6L4&t=1065s
 
 public class PathManager : MonoBehaviour
 {
+    public static PathManager Instance;
     private const int MOVE_STRAIGHT_COST = 10;
-    private const int MOVE_DIAGONAL_COST = 14;
-    public static PathManager Instance; 
+    private const int MOVE_DIAGONAL_COST = 14; 
     private List<Cell> openList;
     private List<Cell> closedList;
     private Grid grid;
@@ -35,7 +36,7 @@ public class PathManager : MonoBehaviour
             {
                
                 Cell pathNode = grid.GetGridObject(x, y);
-                if (pathNode.isWalkable)
+                if (pathNode.isWalkable && pathNode != grid.GetGridObject((int) grid.finishPoint.x,(int) grid.finishPoint.y))
                     pathNode.SetColor(Color.blue);
                 pathNode.gCost = int.MaxValue;
                 pathNode.CalculateFCost();
@@ -53,7 +54,7 @@ public class PathManager : MonoBehaviour
             if (currentNode == endCell)
             {
                 // Reached final node
-                Debug.Log("Reach the end");
+                // Debug.Log("Reach the end");
                 return CalculatePath(endCell);
             }
 
@@ -101,11 +102,11 @@ public class PathManager : MonoBehaviour
         }
         path.Reverse();
 
-        foreach(Cell c in path)
-        {
-            c.SetColor(Color.green);
-            Debug.Log(c.ToString());
-        }
+        // foreach(Cell c in path)
+        // {
+        //     c.SetColor(Color.green);
+        //     // Debug.Log(c.ToString());
+        // }
         return path;
     }
 

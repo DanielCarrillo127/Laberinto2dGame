@@ -23,7 +23,7 @@ public class Grid : ScriptableObject
 
     public Cell[,] gridArray;
 
-    private Vector2 finishPoint;
+    public Vector2 finishPoint;
 
     public Grid(
         int width,

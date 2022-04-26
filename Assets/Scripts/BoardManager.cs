@@ -1,14 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine;
+using DG.Tweening;
 using Random = UnityEngine.Random;
 
 public class BoardManager : MonoBehaviour
 {
     public static BoardManager Instance;
-
     [SerializeField]
     private Cell CellPrefab;
     [SerializeField]
@@ -67,35 +66,29 @@ public class BoardManager : MonoBehaviour
             x = Random.Range(0, Ncells);
             Debug.Log("Enemy: X"+x+"y"+y);
             Point = grid.GetGridObject(x, y);
-            if(Point.isWalkable == true)
+            //add condition to different place to the player
+            if(Point.isWalkable == true && x != xfinal && y != yfinal)
             {
                 i = true;
                 startPoint = new Vector2(x, y);
                 Enemy enemy = Instantiate(EnemyPrefab, startPoint, Quaternion.identity);
                 enemies.Add(enemy);
                 Debug.Log(enemies.Count);
-                // List<Cell> path = PathManager.Instance.FindPath(grid, (int)player.GetPosition.x, (int)player.GetPosition.y, startPoint.x, startPoint.y);
-                // enemy.SetPath(path);
             }
         }
         player.OnPlayerMove += PlayerMoveEnemiesUpdate;
     }
 
-    // void Update()
-    // {
-    //     player.OnPlayerMove += PlayerMoveEnemiesUpdate;
-    // }
 
-
-    public void PlayerMoveEnemiesUpdate(object sender, EventArgs e)
+    private void PlayerMoveEnemiesUpdate(object sender, EventArgs e)
     {
-        Debug.Log("calculate path");
-        // foreach (Enemy ene in enemies)
-        // {
-        //     //FindPath --> grid + startx,y + finishx,y
-        //     List<Cell> path = PathManager.Instance.FindPath(grid, (int)ene.GetPosition.x, (int)ene.GetPosition.y, 3, 3);
-        //     ene.SetPath(path);
-        // }
+        // Debug.Log("calculate path" + player.GetPosition);
+        foreach (Enemy ene in enemies)
+        {
+            //FindPath --> grid + startx,y + finishx,y
+            List<Cell> path = PathManager.Instance.FindPath(grid, (int)ene.GetPosition.x, (int)ene.GetPosition.y, (int)player.GetPosition.x, (int)player.GetPosition.y);
+            ene.SetPath(path);
+        }
     }
 
     // private void NextLevel()
@@ -143,3 +136,29 @@ public class BoardManager : MonoBehaviour
         
     // }
 }
+
+
+
+// multiples enemigos!!!
+//         int cont = 0;
+//         while (i == false && cont != 2)
+//         {
+//             y = Random.Range(0, Ncells);
+//             x = Random.Range(0, Ncells);
+//             Debug.Log("Enemy: X"+x+"y"+y);
+//             Point = grid.GetGridObject(x, y);
+//             //add condition to different place to the player
+//             if(Point.isWalkable == true && x != xfinal && y != yfinal)
+//             {
+//                 startPoint = new Vector2(x, y);
+//                 Enemy enemy = Instantiate(EnemyPrefab, startPoint, Quaternion.identity);
+//                 enemies.Add(enemy);
+//                 Debug.Log(enemies.Count);
+//                 cont++;
+//             }
+//             if(cont == 2)
+//             {
+//                 i = true;
+//             }
+//             Debug.Log("contador"+cont);
+//         }
