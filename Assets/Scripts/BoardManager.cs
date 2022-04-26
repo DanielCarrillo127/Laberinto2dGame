@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class BoardManager : MonoBehaviour
 {
@@ -15,7 +17,7 @@ public class BoardManager : MonoBehaviour
     private Enemy EnemyPrefab;
     private Grid grid;
     private Player player;
-    private Enemy enemy;
+    private List<Enemy> enemies = new List<Enemy>();
     public int Mcells;
     public int Ncells;
     private int x;
@@ -35,9 +37,10 @@ public class BoardManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        y = Random.Range(0, Ncells);
-        x = Random.Range(0, Ncells);
-        finishPoint = new Vector2(3, 5);
+        //set final point
+        int yfinal = Random.Range(0, Ncells);
+        int xfinal = Random.Range(0, Ncells);
+        finishPoint = new Vector2(xfinal, yfinal);
         grid = new Grid(Ncells, Ncells, 1, Mcells, finishPoint,CellPrefab,CellPrefab);
 
         //set random start point only if the point is isWalkable
@@ -47,7 +50,7 @@ public class BoardManager : MonoBehaviour
             x = Random.Range(0, Ncells);
             Debug.Log("X"+x+"y"+y);
             Point = grid.GetGridObject(x, y);
-            if(Point.isWalkable == true)
+            if(Point.isWalkable == true && x != xfinal && y != yfinal)
             {
                 i = true;
                 startPoint = new Vector2(x, y);
@@ -56,6 +59,7 @@ public class BoardManager : MonoBehaviour
         player = Instantiate(PlayerPrefab, startPoint, Quaternion.identity);
         player.setGrid(grid);
 
+        //set random start point only if the point is isWalkable for enemy
         i = false;
         while (i == false)
         {
@@ -67,11 +71,31 @@ public class BoardManager : MonoBehaviour
             {
                 i = true;
                 startPoint = new Vector2(x, y);
-                enemy = Instantiate(EnemyPrefab, startPoint, Quaternion.identity);
+                Enemy enemy = Instantiate(EnemyPrefab, startPoint, Quaternion.identity);
+                enemies.Add(enemy);
+                Debug.Log(enemies.Count);
                 // List<Cell> path = PathManager.Instance.FindPath(grid, (int)player.GetPosition.x, (int)player.GetPosition.y, startPoint.x, startPoint.y);
                 // enemy.SetPath(path);
             }
         }
+        player.OnPlayerMove += PlayerMoveEnemiesUpdate;
+    }
+
+    // void Update()
+    // {
+    //     player.OnPlayerMove += PlayerMoveEnemiesUpdate;
+    // }
+
+
+    public void PlayerMoveEnemiesUpdate(object sender, EventArgs e)
+    {
+        Debug.Log("calculate path");
+        // foreach (Enemy ene in enemies)
+        // {
+        //     //FindPath --> grid + startx,y + finishx,y
+        //     List<Cell> path = PathManager.Instance.FindPath(grid, (int)ene.GetPosition.x, (int)ene.GetPosition.y, 3, 3);
+        //     ene.SetPath(path);
+        // }
     }
 
     // private void NextLevel()

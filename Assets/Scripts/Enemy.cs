@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
 {
     List<Cell> path;
     [SerializeField]
-    private float moveSpeed = 2f;
+    private float moveSpeed = 1f;
 
     public Vector2 GetPosition => transform.position;
 

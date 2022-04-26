@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,7 @@ public class Player : MonoBehaviour
 {
     List<Cell> path;
     private Grid grid;
+    public Cell[,] gridArray;
     [SerializeField]
     private float moveSpeed = 1.5f;
 
@@ -22,6 +24,8 @@ public class Player : MonoBehaviour
     Direction direction;
 
     public Vector2 GetPosition => transform.position;
+
+    public event EventHandler OnPlayerMove;
 
     // Index of current waypoint from which Enemy walks
     // to the next one
@@ -36,6 +40,7 @@ public class Player : MonoBehaviour
     {
         targetPosition = transform.position;
         direction = Direction.down;
+        gridArray = grid.gridArray;
     }
 
     void Update()
@@ -80,19 +85,35 @@ public class Player : MonoBehaviour
             }
         }
         //verify isWalkable to find walls
-        // Cell nextCell = getNext( (int)targetPosition.x , (int)targetPosition.y);
-        // if(nextCell.isWalkable == true)
-        // {
-        //     transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
-        // }
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
-        // Debug.Log("X"+(int) targetPosition.x+"Y"+(int) targetPosition.y);
-        // Debug.Log(targetPosition);
+        
+        int ini = 0, fin = grid.height-1;
+        // ini > (int) targetPosition.x > fin && ini > (int)targetPosition.y > fin
+        if(targetPosition.x >= ini && targetPosition.y >= ini && targetPosition.x <= fin && targetPosition.y <= fin)
+        {
+            Cell next = gridArray[(int) targetPosition.x, (int) targetPosition.y];
+            if(next.isWalkable == true)
+            {
+                
+                if(next.isEndPoint == true)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+                    Debug.Log("win level");
+                    //Set the next Level
+                }else
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+                }
+                //transform.position
+                OnPlayerMove?.Invoke(this, EventArgs.Empty);
+            
+            }else
+            {
+                targetPosition = transform.position;
+            }
+        }else
+        {
+            targetPosition = transform.position;
+        }
     }
-
-    // public Cell getNext(int x, int y)
-    // {
-    //     return Grid.GetGridObject(x,y);
-    // }
 
 }

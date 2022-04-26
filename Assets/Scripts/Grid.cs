@@ -7,9 +7,11 @@ using Random = UnityEngine.Random;
 
 public class Grid : ScriptableObject
 {
-    private int width;
+    public static Grid Instance;
 
-    private int height;
+    public int width;
+
+    public int height;
 
     private int cellSize;
 
@@ -19,7 +21,7 @@ public class Grid : ScriptableObject
 
     private Cell cellPrefabfinish;
 
-    private Cell[,] gridArray;
+    public Cell[,] gridArray;
 
     private Vector2 finishPoint;
 

@@ -23,7 +23,19 @@ PrefabInstance:
     - target: {fileID: 3718647343025395524, guid: 661fd36d9db37614abad9eac47632838, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 3625043607559282579, guid: 19fb86013d8c24d6cb8410c0aadf30fa, type: 3}
+      objectReference: {fileID: -2135585597343286014, guid: 5aa8b770bc43046bc8d993d0d5b7f4a5, type: 3}
+    - target: {fileID: 3718647343025395524, guid: 661fd36d9db37614abad9eac47632838, type: 3}
+      propertyPath: m_Color.b
+      value: 0.07863116
+      objectReference: {fileID: 0}
+    - target: {fileID: 3718647343025395524, guid: 661fd36d9db37614abad9eac47632838, type: 3}
+      propertyPath: m_Color.g
+      value: 0.07863116
+      objectReference: {fileID: 0}
+    - target: {fileID: 3718647343025395524, guid: 661fd36d9db37614abad9eac47632838, type: 3}
+      propertyPath: m_Color.r
+      value: 0.8773585
+      objectReference: {fileID: 0}
     - target: {fileID: 3718647343025395527, guid: 661fd36d9db37614abad9eac47632838, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -75,6 +87,10 @@ PrefabInstance:
     - target: {fileID: 3718647343025395530, guid: 661fd36d9db37614abad9eac47632838, type: 3}
       propertyPath: m_TagString
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 3949378783944552009, guid: 661fd36d9db37614abad9eac47632838, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6832307862930382490, guid: 661fd36d9db37614abad9eac47632838, type: 3}
       propertyPath: moveSpeed
