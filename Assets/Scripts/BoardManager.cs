@@ -46,12 +46,13 @@ public class BoardManager : MonoBehaviour
     private bool i;
     private bool ready = true;
 
-    private int level = 1;
+    public static int level = 1;
 
     public Button buttonlose;
 
     public Text Textfield;
     public Text TextLevel;
+ 
 
     private void Awake()
     {
@@ -80,9 +81,17 @@ public class BoardManager : MonoBehaviour
         }
     }
 
+    
+
     // Start is called before the first frame update
     private void Start()
     {
+        
+        Ncells = InitialValues.Nvalue;
+        Mcells = InitialValues.Mvalue;
+        level = 1;
+        TimerController.Instance.BeginTimer();
+
         //set final point
         TextLevel.text = "Layer: "+level.ToString();
         Time.timeScale = 1f;
@@ -184,6 +193,7 @@ public class BoardManager : MonoBehaviour
                     CellPrefab,
                     CellPrefab);
             //set random startpoint only if the point is isWalkable
+            i = false;
             while (i == false)
             {
                 y = Random.Range(0, Ncells);
@@ -223,6 +233,7 @@ public class BoardManager : MonoBehaviour
         }
         else
         {
+            TimerController.Instance.EndTimer();
             SceneManager.LoadScene("Final");
         }
     }
