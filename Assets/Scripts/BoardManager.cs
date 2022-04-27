@@ -48,7 +48,7 @@ public class BoardManager : MonoBehaviour
 
     private int level = 1;
 
-    public Button button;
+    public Button buttonlose;
 
     public Text Textfield;
     public Text TextLevel;
@@ -68,7 +68,7 @@ public class BoardManager : MonoBehaviour
                 {
                     // //msg you loose and change the scene
                     Time.timeScale = 0f;
-                    button.gameObject.SetActive(true);
+                    buttonlose.gameObject.SetActive(true);
                     Textfield.text = "you died :c";
                 }
             }
