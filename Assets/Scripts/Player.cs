@@ -93,16 +93,8 @@ public class Player : MonoBehaviour
             Cell next = gridArray[(int) targetPosition.x, (int) targetPosition.y];
             if(next.isWalkable == true)
             {
+                transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
                 
-                if(next.isEndPoint == true)
-                {
-                    transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
-                    Debug.Log("win level");
-                    //Set the next Level
-                }else
-                {
-                    transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
-                }
                 //transform.position
                 OnPlayerMove?.Invoke(this, EventArgs.Empty);
             
@@ -115,5 +107,6 @@ public class Player : MonoBehaviour
             targetPosition = transform.position;
         }
     }
+    
 
 }

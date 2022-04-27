@@ -531,7 +531,7 @@ GameObject:
   - component: {fileID: -1707968034998958809}
   m_Layer: 0
   m_Name: Cell
-  m_TagString: Untagged
+  m_TagString: Cell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -573,6 +573,7 @@ MonoBehaviour:
   gCost: 0
   hCost: 0
   fCost: 0
+  pastCell: {fileID: 0}
 --- !u!61 &-1707968034998958809
 BoxCollider2D:
   m_ObjectHideFlags: 0
