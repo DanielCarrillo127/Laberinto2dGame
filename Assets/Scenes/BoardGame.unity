@@ -660,11 +660,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CellPrefab: {fileID: 4055601266444059904, guid: 874d85ce717e88d4088eee6b75d09bfe, type: 3}
+  cellPrefabfinish: {fileID: 4117944515870571727, guid: faa44ee49566ed542891f61c35183d7d, type: 3}
+  cellWallPrefab: {fileID: 4281232217118773859, guid: 5b3e52dabffb7fa43b559dd5a291a8ac, type: 3}
   PlayerPrefab: {fileID: 6832307862930382490, guid: 661fd36d9db37614abad9eac47632838, type: 3}
   EnemyPrefab: {fileID: 6122061088491212735, guid: 77988e71cd3f45e46a792b414f6e2c10, type: 3}
   Mcells: 5
   Ncells: 10
-  level: 1
   buttonlose: {fileID: 587060743}
   Textfield: {fileID: 286001655}
   TextLevel: {fileID: 1659539369}

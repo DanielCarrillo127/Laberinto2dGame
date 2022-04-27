@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
     public Cell[,] gridArray;
     [SerializeField]
     private float moveSpeed = 1.5f;
+    [SerializeField]
+    private Animator myAnim;
 
     Vector3 targetPosition;
 
@@ -41,6 +43,7 @@ public class Player : MonoBehaviour
         targetPosition = transform.position;
         direction = Direction.down;
         gridArray = grid.gridArray;
+        // myAnim = GetComponent<Animator>();
     }
 
     void Update()
@@ -93,6 +96,8 @@ public class Player : MonoBehaviour
             Cell next = gridArray[(int) targetPosition.x, (int) targetPosition.y];
             if(next.isWalkable == true)
             {
+                myAnim.SetFloat("moveX", axisDirection.x);
+                myAnim.SetFloat("moveY", axisDirection.y);
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
                 
                 //transform.position

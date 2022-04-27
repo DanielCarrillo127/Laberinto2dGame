@@ -16,6 +16,12 @@ public class BoardManager : MonoBehaviour
     private Cell CellPrefab;
 
     [SerializeField]
+    private Cell cellPrefabfinish;
+
+    [SerializeField]
+    private Cell cellWallPrefab;
+
+    [SerializeField]
     private Player PlayerPrefab;
 
     [SerializeField]
@@ -101,12 +107,17 @@ public class BoardManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        
-        Ncells = InitialValues.Nvalue;
-        Mcells = InitialValues.Mvalue;
+        if(InitialValues.Nvalue != null){
+            Ncells = InitialValues.Nvalue;
+            Mcells = InitialValues.Mvalue;
+        }else{
+            Ncells = 10;
+            Mcells = 5;
+        }
+
         level = 1;
         TimerController.Instance.BeginTimer();
-
+        Time.timeScale = 1f;
         //set final point
         TextLevel.text = "Layer: "+level.ToString();
         bool k = false;
@@ -121,7 +132,8 @@ public class BoardManager : MonoBehaviour
                     1,
                     Mcells,
                     finishPoint,
-                    CellPrefab,
+                    cellPrefabfinish,
+                    cellWallPrefab,
                     CellPrefab);
 
             //set random startpoint only if the point is isWalkable
@@ -198,7 +210,8 @@ public class BoardManager : MonoBehaviour
                         1,
                         Mcells,
                         finishPoint,
-                        CellPrefab,
+                        cellPrefabfinish,
+                        cellWallPrefab,
                         CellPrefab);
                 //set random startpoint only if the point is isWalkable
                 i = false;

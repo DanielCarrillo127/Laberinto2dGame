@@ -31,20 +31,6 @@ public class Cell : MonoBehaviour
         textMeshPro.text = text;
     }
 
-    public void SetColor(Color color)
-    {
-        Inner.GetComponent<SpriteRenderer>().color = color;
-    }
-
-    // private void OnMouseDown()
-    // {
-        
-    //     if (Input.GetMouseButton(0))
-    //     {
-    //         grid.CellMouseClick(this);
-    //     } 
-    // }
-
     internal void CalculateFCost()
     {
         fCost = gCost + hCost;
@@ -53,13 +39,11 @@ public class Cell : MonoBehaviour
     internal void SetWalkable(bool v)
     {
         isWalkable = v;
-        SetColor(Color.black);
     }
 
     internal void SetEndPoint(bool v)
     {
         isEndPoint = v;
-        SetColor(Color.red);
     }
 
     internal void SetCollider()

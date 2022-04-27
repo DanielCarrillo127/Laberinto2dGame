@@ -21,6 +21,8 @@ public class Grid : ScriptableObject
 
     private Cell cellPrefabfinish;
 
+    private Cell cellWallPrefab;
+
     public Cell[,] gridArray;
 
     public Vector2 finishPoint;
@@ -32,6 +34,7 @@ public class Grid : ScriptableObject
         int cellM,
         Vector2 FinishPoint,
         Cell cellPrefabfinish,
+        Cell cellWallPrefab,
         Cell cellPrefab
     )
     {
@@ -41,6 +44,7 @@ public class Grid : ScriptableObject
         this.finishPoint = FinishPoint;
         this.cellPrefab = cellPrefab;
         this.cellPrefabfinish = cellPrefabfinish;
+        this.cellWallPrefab = cellWallPrefab;
         this.cellM = cellM;
 
         generateBoard();
@@ -59,22 +63,24 @@ public class Grid : ScriptableObject
                 if (i == finishPoint.x && j == finishPoint.y)
                 {
                     //change cellprefabfinish
-                    cell = Instantiate(cellPrefab, p, Quaternion.identity);
+                    cell = Instantiate(cellPrefabfinish, p, Quaternion.identity);
                     cell.Init(this, (int) p.x, (int) p.y, true);
                     cell.SetEndPoint(true);
                 }
                 else
                 {
-                    cell = Instantiate(cellPrefab, p, Quaternion.identity);
-                    cell.Init(this, (int) p.x, (int) p.y, true);
+                    
                     if (Random.Range(0, height) <= 2 && cont != 0)
                     {
+                        cell = Instantiate(cellWallPrefab, p, Quaternion.identity);
+                        cell.Init(this, (int) p.x, (int) p.y, true);
                         cell.SetWalkable(false);
                         cont--;
                     }
                     else
                     {
-                        cell.SetColor(Color.blue);
+                        cell = Instantiate(cellPrefab, p, Quaternion.identity);
+                        cell.Init(this, (int) p.x, (int) p.y, true);
                     }
                 }
 
