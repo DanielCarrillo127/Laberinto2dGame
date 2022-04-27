@@ -81,66 +81,6 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    
-
-    // Start is called before the first frame update
-    private void Start()
-    {
-        
-        Ncells = InitialValues.Nvalue;
-        Mcells = InitialValues.Mvalue;
-        level = 1;
-        TimerController.Instance.BeginTimer();
-
-        //set final point
-        TextLevel.text = "Layer: "+level.ToString();
-        Time.timeScale = 1f;
-        int yfinal = Random.Range(0, Ncells);
-        int xfinal = Random.Range(0, Ncells);
-        finishPoint = new Vector2(xfinal, yfinal);
-        grid =
-            new Grid(Ncells,
-                Ncells,
-                1,
-                Mcells,
-                finishPoint,
-                CellPrefab,
-                CellPrefab);
-
-        //set random startpoint only if the point is isWalkable
-        while (i == false)
-        {
-            y = Random.Range(0, Ncells);
-            x = Random.Range(0, Ncells);
-            Point = grid.GetGridObject(x, y);
-            if (Point.isWalkable == true && x != xfinal && y != yfinal)
-            {
-                i = true;
-                startPoint = new Vector2(x, y);
-            }
-        }
-        player = Instantiate(PlayerPrefab, startPoint, Quaternion.identity);
-        player.setGrid (grid);
-
-        //set random start point only if the point is isWalkable for enemy
-        i = false;
-        while (i == false)
-        {
-            y = Random.Range(0, Ncells);
-            x = Random.Range(0, Ncells);
-            Point = grid.GetGridObject(x, y);
-            //add condition to different place to the player
-            if (Point.isWalkable == true && x != xfinal && y != yfinal)
-            {
-                i = true;
-                startPoint = new Vector2(x, y);
-                Enemy enemy = Instantiate(EnemyPrefab, startPoint, Quaternion.identity);
-                enemies.Add (enemy);
-            }
-        }
-        player.OnPlayerMove += PlayerMoveEnemiesUpdate;
-    }
-
     private void PlayerMoveEnemiesUpdate(object sender, EventArgs e)
     {
         foreach (Enemy ene in enemies)
@@ -156,6 +96,73 @@ public class BoardManager : MonoBehaviour
                     (int) player.GetPosition.y);
             ene.SetPath (path);
         }
+    }    
+
+    // Start is called before the first frame update
+    private void Start()
+    {
+        
+        Ncells = InitialValues.Nvalue;
+        Mcells = InitialValues.Mvalue;
+        level = 1;
+        TimerController.Instance.BeginTimer();
+
+        //set final point
+        TextLevel.text = "Layer: "+level.ToString();
+        bool k = false;
+        while(k == false)
+        {
+            int yfinal = Random.Range(0, Ncells);
+            int xfinal = Random.Range(0, Ncells);
+            finishPoint = new Vector2(xfinal, yfinal);
+            grid =
+                new Grid(Ncells,
+                    Ncells,
+                    1,
+                    Mcells,
+                    finishPoint,
+                    CellPrefab,
+                    CellPrefab);
+
+            //set random startpoint only if the point is isWalkable
+            while (i == false)
+            {
+                y = Random.Range(0, Ncells);
+                x = Random.Range(0, Ncells);
+                Point = grid.GetGridObject(x, y);
+                if (Point.isWalkable == true && x != xfinal && y != yfinal)
+                {
+                    i = true;
+                    startPoint = new Vector2(x, y);
+                }
+            }
+            List<Cell> path =PathManager.Instance.FindPath(grid,(int) startPoint.x,(int) startPoint.y,(int) finishPoint.x,(int) finishPoint.y);
+            if(path != null)
+            {
+                player = Instantiate(PlayerPrefab, startPoint, Quaternion.identity);
+                player.setGrid (grid);
+                k = true;
+            }else{
+                DestroyGrid();
+            }
+        }
+        //set random start point only if the point is isWalkable for enemy
+        i = false;
+        while (i == false)
+        {
+            y = Random.Range(0, Ncells);
+            x = Random.Range(0, Ncells);
+            Point = grid.GetGridObject(x, y);
+            //add condition to different place to the player
+            if (Point.isWalkable == true && x != startPoint.x && y != startPoint.y)
+            {
+                i = true;
+                startPoint = new Vector2(x, y);
+                Enemy enemy = Instantiate(EnemyPrefab, startPoint, Quaternion.identity);
+                enemies.Add (enemy);
+            }
+        }
+        player.OnPlayerMove += PlayerMoveEnemiesUpdate;
     }
 
     private void NextLevel()
@@ -176,38 +183,46 @@ public class BoardManager : MonoBehaviour
             foreach (GameObject cell in taggedCells) {
 	            Destroy(cell);
             }
-
             enemies.Clear();
             startPoint = Vector2.zero;
             //set final point
-            Time.timeScale = 1f;
-            int yfinal = Random.Range(0, Ncells);
-            int xfinal = Random.Range(0, Ncells);
-            finishPoint = new Vector2(xfinal, yfinal);
-            grid =
-                new Grid(Ncells,
-                    Ncells,
-                    1,
-                    Mcells,
-                    finishPoint,
-                    CellPrefab,
-                    CellPrefab);
-            //set random startpoint only if the point is isWalkable
-            i = false;
-            while (i == false)
-            {
-                y = Random.Range(0, Ncells);
-                x = Random.Range(0, Ncells);
-                Point = grid.GetGridObject(x, y);
-                if (Point.isWalkable == true && x != xfinal && y != yfinal)
+            bool k = false;
+            while(k == false){
+
+                int yfinal = Random.Range(0, Ncells);
+                int xfinal = Random.Range(0, Ncells);
+                finishPoint = new Vector2(xfinal, yfinal);
+                grid =
+                    new Grid(Ncells,
+                        Ncells,
+                        1,
+                        Mcells,
+                        finishPoint,
+                        CellPrefab,
+                        CellPrefab);
+                //set random startpoint only if the point is isWalkable
+                i = false;
+                while (i == false)
                 {
-                    i = true;
-                    startPoint = new Vector2(x, y);
+                    y = Random.Range(0, Ncells);
+                    x = Random.Range(0, Ncells);
+                    Point = grid.GetGridObject(x, y);
+                    if (Point.isWalkable == true && x != xfinal && y != yfinal)
+                    {
+                        i = true;
+                        startPoint = new Vector2(x, y);
+                    }
                 }
-            }
-            player = Instantiate(PlayerPrefab, startPoint, Quaternion.identity);
-            player.setGrid (grid);
-            
+                List<Cell> path =PathManager.Instance.FindPath(grid,(int) startPoint.x,(int) startPoint.y,(int) finishPoint.x,(int) finishPoint.y);
+                if(path != null)
+                {
+                    player = Instantiate(PlayerPrefab, startPoint, Quaternion.identity);
+                    player.setGrid (grid);
+                    k = true;
+                }else{
+                    DestroyGrid();
+                }
+            }  
             int cont = 0;
             i = false;
             while (i == false && cont != level)
@@ -216,7 +231,7 @@ public class BoardManager : MonoBehaviour
                 x = Random.Range(0, Ncells);
                 Point = grid.GetGridObject(x, y);
                 //add condition to different place to the player
-                if(Point.isWalkable == true && x != xfinal && y != yfinal)
+                if(Point.isWalkable == true && x != startPoint.x && y != startPoint.y)
                 {
                     startPoint = new Vector2(x, y);
                     Enemy enemy = Instantiate(EnemyPrefab, startPoint, Quaternion.identity);
@@ -237,6 +252,21 @@ public class BoardManager : MonoBehaviour
             SceneManager.LoadScene("Final");
         }
     }
+
+
+    private void DestroyGrid()
+    {
+        GameObject[] taggedCells = GameObject.FindGameObjectsWithTag("Cell");   
+        foreach (GameObject cell in taggedCells) {
+	            Destroy(cell);
+        }
+    }
+    
+
+    // private void IniToFinPath(Grid g, Vector2 startPoint , Vector2 finishPoint)
+    // {
+
+    // }
 
     IEnumerator sendNotification(string text,Color colors , int time)
     {
