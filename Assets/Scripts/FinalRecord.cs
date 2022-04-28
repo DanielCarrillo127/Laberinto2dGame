@@ -17,16 +17,16 @@ public class FinalRecord : MonoBehaviour
         string ftime = timestr.Substring(6, 8);
         FinalTime.text = "Your final time was:  " + ftime;
         if(levels == 5){
-            Header.text = "Congratulations!!, you escape the cave and passed through the enemies";
+            Header.text = "CONGRATULATIONS!! you escape the cave and passed through the enemies.";
             levels = levels-1;
-            FinalLayer.text = "you reached the layer " +  levels.ToString()+ " of the cave" ;
+            FinalLayer.text = "You reached the layer " +  levels.ToString()+ " of the cave" ;
         }else if(levels < 4)
         {  
-            FinalLayer.text = "you reached the layer " +  levels.ToString()+ " of the cave" ;
-            Header.text = "Sorry you lost, keep trying!"; 
+            FinalLayer.text = "You reached the layer " +  levels.ToString()+ " of the cave" ;
+            Header.text = "Sorry you lost, KEEP TRYING!"; 
         }else{
-            Header.text = "Sorry you lost, keep trying!"; 
-            FinalLayer.text = "you reached the last layer of the cave, but you die sorry" ;
+            Header.text = "Sorry you lost, KEEP TRYING!"; 
+            FinalLayer.text = "You reached the last layer of the cave, but you die sorry" ;
         }
         
     }
