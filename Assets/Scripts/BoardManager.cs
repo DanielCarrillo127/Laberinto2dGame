@@ -58,7 +58,24 @@ public class BoardManager : MonoBehaviour
 
     public Text Textfield;
     public Text TextLevel;
+    public Text Timertext;
+
+    private TimeSpan timePlaying;
+    private bool timerGoing;
+
+    private float elapsedTime;
+    private string timePlayingStr;
  
+
+    public int GetLevel()
+    {
+        return level;
+    }
+    public string GetTime()
+    {
+        return timePlayingStr;
+    }
+
 
     private void Awake()
     {
@@ -74,6 +91,7 @@ public class BoardManager : MonoBehaviour
                 if (player.GetPosition == ene.GetPosition)
                 {
                     // //msg you loose and change the scene
+                    EndTimer();
                     Time.timeScale = 0f;
                     buttonlose.gameObject.SetActive(true);
                     Textfield.text = "you died :c";
@@ -81,7 +99,6 @@ public class BoardManager : MonoBehaviour
             }
             if (player.GetPosition == finishPoint)
             {
-                level++;
                 NextLevel();
             }
         }
@@ -107,16 +124,15 @@ public class BoardManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        if(InitialValues.Nvalue != null){
-            Ncells = InitialValues.Nvalue;
-            Mcells = InitialValues.Mvalue;
-        }else{
-            Ncells = 10;
-            Mcells = 5;
-        }
+        //Active!!!!!
+        // Ncells = InitialValues.Nvalue;
+        // Mcells = InitialValues.Mvalue;
+
+        Timertext.text = "Time: 00:00.00";
+        timerGoing = false;
 
         level = 1;
-        TimerController.Instance.BeginTimer();
+        BeginTimer();
         Time.timeScale = 1f;
         //set final point
         TextLevel.text = "Layer: "+level.ToString();
@@ -179,12 +195,13 @@ public class BoardManager : MonoBehaviour
 
     private void NextLevel()
     {
-        TextLevel.text = "Layer: "+level.ToString();
         // Color c = new Color32(144,2, 255, 100);
         ready = false;
         StartCoroutine(sendNotification("Next Layer Run!!! \n another ghost appear",Color.white, 1));
         if (level <= 4)
         {
+            level++;
+            TextLevel.text = "Layer: "+level.ToString();
             Destroy (GameObject.FindWithTag("Player"));
             GameObject[] taggedEnemies= GameObject.FindGameObjectsWithTag("Enemy");  
             foreach (GameObject ene in taggedEnemies) 
@@ -261,7 +278,7 @@ public class BoardManager : MonoBehaviour
         }
         else
         {
-            TimerController.Instance.EndTimer();
+            EndTimer();
             SceneManager.LoadScene("Final");
         }
     }
@@ -274,12 +291,6 @@ public class BoardManager : MonoBehaviour
 	            Destroy(cell);
         }
     }
-    
-
-    // private void IniToFinPath(Grid g, Vector2 startPoint , Vector2 finishPoint)
-    // {
-
-    // }
 
     IEnumerator sendNotification(string text,Color colors , int time)
     {
@@ -288,5 +299,32 @@ public class BoardManager : MonoBehaviour
         yield return new WaitForSeconds(time);
         Textfield.text = "";
     }
+
+    public void BeginTimer()
+    {
+        timerGoing = true;
+        elapsedTime = 0f;
+
+        StartCoroutine(UpdateTimer());
+    }
+
+    public void EndTimer()
+    {
+        timerGoing = false;
+    }
+
+    private IEnumerator UpdateTimer()
+    {
+        while(timerGoing)
+        {
+            elapsedTime += Time.deltaTime;
+            timePlaying = TimeSpan.FromSeconds(elapsedTime);
+            timePlayingStr = "Time: " + timePlaying.ToString("mm':'ss'.'ff");
+            Timertext.text = timePlayingStr;
+
+            yield return null;  
+        }
+    }
+
 
 }

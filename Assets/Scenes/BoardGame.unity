@@ -625,7 +625,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1379594032}
   - component: {fileID: 1379594033}
-  - component: {fileID: 1379594034}
   m_Layer: 0
   m_Name: BoardManager
   m_TagString: Untagged
@@ -669,18 +668,6 @@ MonoBehaviour:
   buttonlose: {fileID: 587060743}
   Textfield: {fileID: 286001655}
   TextLevel: {fileID: 1659539369}
---- !u!114 &1379594034
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1379594031}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be412ef12c7ab6147a01a7206d2a680d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   Timertext: {fileID: 477908069}
 --- !u!1 &1552427931
 GameObject:
