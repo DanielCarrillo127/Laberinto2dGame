@@ -41,9 +41,9 @@ public class Enemy : MonoBehaviour
         if (path == null)
             return;
 
+
         if (waypointIndex <= path.Count - 1)
         {
-
             // Move player from current waypoint to the next one
             // using MoveTowards method
             transform.position = Vector2.MoveTowards(transform.position,

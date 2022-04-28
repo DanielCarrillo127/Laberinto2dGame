@@ -93,8 +93,13 @@ public class BoardManager : MonoBehaviour
                     // //msg you loose and change the scene
                     EndTimer();
                     Time.timeScale = 0f;
+                    if(level == 4)
+                    {
+                        level = 5;
+                    }
                     buttonlose.gameObject.SetActive(true);
-                    Textfield.text = "you died :c";
+                    Textfield.text = "You're Dead";
+
                 }
             }
             if (player.GetPosition == finishPoint)
@@ -167,6 +172,7 @@ public class BoardManager : MonoBehaviour
             List<Cell> path =PathManager.Instance.FindPath(grid,(int) startPoint.x,(int) startPoint.y,(int) finishPoint.x,(int) finishPoint.y);
             if(path != null)
             {
+                Destroy (GameObject.FindWithTag("Player"));
                 player = Instantiate(PlayerPrefab, startPoint, Quaternion.identity);
                 player.setGrid (grid);
                 k = true;
@@ -197,12 +203,13 @@ public class BoardManager : MonoBehaviour
     {
         // Color c = new Color32(144,2, 255, 100);
         ready = false;
-        StartCoroutine(sendNotification("Next Layer Run!!! \n another ghost appear",Color.white, 1));
+        
+        level++; 
         if (level <= 4)
         {
-            level++;
+            StartCoroutine(sendNotification("Next Layer Run!!! \n another of your ghost appears",Color.white, 1));               
             TextLevel.text = "Layer: "+level.ToString();
-            Destroy (GameObject.FindWithTag("Player"));
+            
             GameObject[] taggedEnemies= GameObject.FindGameObjectsWithTag("Enemy");  
             foreach (GameObject ene in taggedEnemies) 
             {
@@ -246,6 +253,7 @@ public class BoardManager : MonoBehaviour
                 List<Cell> path =PathManager.Instance.FindPath(grid,(int) startPoint.x,(int) startPoint.y,(int) finishPoint.x,(int) finishPoint.y);
                 if(path != null)
                 {
+                    Destroy (GameObject.FindWithTag("Player"));
                     player = Instantiate(PlayerPrefab, startPoint, Quaternion.identity);
                     player.setGrid (grid);
                     k = true;
