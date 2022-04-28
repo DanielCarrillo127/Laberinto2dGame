@@ -94,14 +94,19 @@ public class Player : MonoBehaviour
         if(targetPosition.x >= ini && targetPosition.y >= ini && targetPosition.x <= fin && targetPosition.y <= fin)
         {
             Cell next = gridArray[(int) targetPosition.x, (int) targetPosition.y];
-            if(next.isWalkable == true)
+            if(next.isWalkable == true && targetPosition != transform.position)
             {
                 myAnim.SetFloat("moveX", axisDirection.x);
                 myAnim.SetFloat("moveY", axisDirection.y);
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
                 
                 //transform.position
-                OnPlayerMove?.Invoke(this, EventArgs.Empty);
+                if(transform.position == targetPosition)
+                {
+                    Debug.Log("player move success");
+                    OnPlayerMove?.Invoke(this, EventArgs.Empty);
+                }
+
             
             }else
             {

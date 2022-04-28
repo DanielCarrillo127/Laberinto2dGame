@@ -15,10 +15,10 @@ public class Enemy : MonoBehaviour
     private int waypointIndex = 0;
 
     // Update is called once per frame
-    // void Update()
-    // {
-    //     Move();
-    // }
+    void Update()
+    {
+        Move();
+    }
 
     public void SetPath(List<Cell> path)
     {
@@ -42,21 +42,22 @@ public class Enemy : MonoBehaviour
             return;
 
 
-        if (waypointIndex <= path.Count - 1)
+        if (waypointIndex <= path.Count)
         {
             // Move player from current waypoint to the next one
             // using MoveTowards method
             transform.position = Vector2.MoveTowards(transform.position,
-               path[path.Count - 1].transform.position,
+               path[waypointIndex].transform.position,
                moveSpeed * Time.deltaTime);
+               
 
             // If player reaches position of waypoint he walked towards
             // then waypointIndex is increased by 1
             // and player starts to walk to the next waypoint
-            // if (transform.position == path[waypointIndex].transform.position)
-            // {
-            //     waypointIndex += 1;
-            // }
+            if (transform.position == path[waypointIndex].transform.position)
+            {
+                waypointIndex += 1;
+            }
         }
     }
 }

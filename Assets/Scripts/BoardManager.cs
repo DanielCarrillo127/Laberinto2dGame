@@ -207,7 +207,7 @@ public class BoardManager : MonoBehaviour
         level++; 
         if (level <= 4)
         {
-            StartCoroutine(sendNotification("Next Layer Run!!! \n Another of your ghost appears",Color.white, 1));               
+            StartCoroutine(sendNotification("Next Layer Run!!! \n nother of your ghost appears",Color.white, 1));               
             TextLevel.text = "Layer: "+level.ToString();
             
             GameObject[] taggedEnemies= GameObject.FindGameObjectsWithTag("Enemy");  
