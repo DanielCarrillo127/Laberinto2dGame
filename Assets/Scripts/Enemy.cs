@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
 {
     List<Cell> path;
     [SerializeField]
-    private float moveSpeed = 1f;
+    private float moveSpeed = 1.5f;
 
     public Vector2 GetPosition => transform.position;
 
@@ -19,10 +19,11 @@ public class Enemy : MonoBehaviour
     {
         Move();
     }
-
+    
     public void SetPath(List<Cell> path)
     {
         //ResetPosition();
+        // Debug.Log("new path");
         waypointIndex = 0;
         this.path = path;
         Move();
@@ -41,7 +42,6 @@ public class Enemy : MonoBehaviour
         if (path == null)
             return;
 
-
         if (waypointIndex <= path.Count)
         {
             // Move player from current waypoint to the next one
@@ -50,7 +50,6 @@ public class Enemy : MonoBehaviour
                path[waypointIndex].transform.position,
                moveSpeed * Time.deltaTime);
                
-
             // If player reaches position of waypoint he walked towards
             // then waypointIndex is increased by 1
             // and player starts to walk to the next waypoint

@@ -76,7 +76,6 @@ public class BoardManager : MonoBehaviour
         return timePlayingStr;
     }
 
-
     private void Awake()
     {
         Instance = this;
@@ -130,8 +129,8 @@ public class BoardManager : MonoBehaviour
     private void Start()
     {
         //Active!!!!!
-        // Ncells = InitialValues.Nvalue;
-        // Mcells = InitialValues.Mvalue;
+        Ncells = InitialValues.Nvalue;
+        Mcells = InitialValues.Mvalue;
 
         Timertext.text = "Time: 00:00.00";
         timerGoing = false;
@@ -269,7 +268,8 @@ public class BoardManager : MonoBehaviour
                 x = Random.Range(0, Ncells);
                 Point = grid.GetGridObject(x, y);
                 //add condition to different place to the player
-                if(Point.isWalkable == true && x != startPoint.x && y != startPoint.y)
+                List<Cell> path =PathManager.Instance.FindPath(grid,x,y,(int) startPoint.x,(int) startPoint.y);
+                if(Point.isWalkable == true && x != startPoint.x && y != startPoint.y && path != null)
                 {
                     startPoint = new Vector2(x, y);
                     Enemy enemy = Instantiate(EnemyPrefab, startPoint, Quaternion.identity);

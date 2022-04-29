@@ -103,7 +103,6 @@ public class Player : MonoBehaviour
                 //transform.position
                 if(transform.position == targetPosition)
                 {
-                    Debug.Log("player move success");
                     OnPlayerMove?.Invoke(this, EventArgs.Empty);
                 }
 
